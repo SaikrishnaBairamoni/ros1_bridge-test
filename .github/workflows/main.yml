@@ -4,16 +4,13 @@ on: [push, pull_request] # on all pushes and PRs
 
 jobs:
   ros1_bridge:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: ros-tooling/setup-ros@v0.2
-        with:
-          required-ros-distributions: "noetic rolling"
+      - uses: actions/checkout@v4.2.2
+      - uses: ros-tooling/setup-ros@v0.7
       - name: Build and test ros1-bridge
-        uses: ros-tooling/action-ros-ci@v0.2
+        uses: ros-tooling/action-ros-ci@v0.4
         with:
           package-name: ros1_bridge
           target-ros1-distro: noetic
-          target-ros2-distro: rolling
-
+          target-ros2-distro: humble
