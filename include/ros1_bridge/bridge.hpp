@@ -64,6 +64,9 @@ get_all_message_mappings_2to1();
 std::multimap<std::string, std::string>
 get_all_service_mappings_2to1();
 
+std::multimap<std::string, std::string>
+get_all_action_mappings_2to1();
+
 std::shared_ptr<FactoryInterface>
 get_factory(
   const std::string & ros1_type_name,
@@ -71,6 +74,9 @@ get_factory(
 
 std::unique_ptr<ServiceFactoryInterface>
 get_service_factory(const std::string &, const std::string &, const std::string &);
+
+std::unique_ptr<ActionFactoryInterface>
+get_action_factory(const std::string &, const std::string &, const std::string &);
 
 Bridge1to2Handles
 create_bridge_from_1_to_2(
@@ -104,7 +110,8 @@ create_bridge_from_2_to_1(
   const std::string & ros1_type_name,
   const std::string & ros1_topic_name,
   size_t publisher_queue_size,
-  rclcpp::PublisherBase::SharedPtr ros2_pub = nullptr);
+  rclcpp::PublisherBase::SharedPtr ros2_pub = nullptr,
+  bool custom_callback_group = false);
 
 Bridge2to1Handles
 create_bridge_from_2_to_1(
@@ -116,7 +123,8 @@ create_bridge_from_2_to_1(
   const std::string & ros1_type_name,
   const std::string & ros1_topic_name,
   size_t publisher_queue_size,
-  rclcpp::PublisherBase::SharedPtr ros2_pub = nullptr);
+  rclcpp::PublisherBase::SharedPtr ros2_pub = nullptr,
+  bool custom_callback_group = false);
 
 BridgeHandles
 create_bidirectional_bridge(
@@ -125,7 +133,18 @@ create_bidirectional_bridge(
   const std::string & ros1_type_name,
   const std::string & ros2_type_name,
   const std::string & topic_name,
-  size_t queue_size = 10);
+  size_t queue_size = 10,
+  bool custom_callback_group = false);
+
+BridgeHandles
+create_bidirectional_bridge(
+  ros::NodeHandle ros1_node,
+  rclcpp::Node::SharedPtr ros2_node,
+  const std::string & ros1_type_name,
+  const std::string & ros2_type_name,
+  const std::string & topic_name,
+  size_t queue_size,
+  const rclcpp::QoS & publisher_qos);
 
 }  // namespace ros1_bridge
 
